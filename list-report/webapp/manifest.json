@@ -3,7 +3,11 @@
   "sap.app": {
     "id": "listreport",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": ["", "en", "vi"],
+      "fallbackLocale": "en"
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -42,7 +46,7 @@
         "sap.ui.comp": {},
         "sap.ui.core": {},
         "sap.ui.fl": {},
-				"sap.ui.mdc": {}
+        "sap.ui.mdc": {}
       }
     },
     "contentDensities": {
@@ -80,9 +84,7 @@
         {
           "name": "RouteDynamicPageListReport",
           "pattern": ":?query:",
-          "target": [
-            "TargetDynamicPageListReport"
-          ]
+          "target": ["TargetDynamicPageListReport"]
         }
       ],
       "targets": {

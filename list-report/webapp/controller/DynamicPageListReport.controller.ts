@@ -18,6 +18,10 @@ interface FilterData {
   fieldData: string[];
 }
 
+interface ExtendedFilterBar extends FilterBar {
+  retrieveNonVisibleFiltersWithValues(): FilterGroupItem[];
+}
+
 /**
  * @namespace listreport.controller
  */
@@ -26,7 +30,8 @@ export default class DynamicPageListReport extends Controller {
   private oSmartVariantManagement?: SmartVariantManagement | null;
   private oExpandedLabel?: Label | null;
   private oSnappedLabel?: Label | null;
-  private oFilterBar?: FilterBar | null;
+  // private oFilterBar?: FilterBar | null;
+  private oFilterBar?: ExtendedFilterBar | null;
   private oTable?: Table | null;
 
   public onInit(): void {
@@ -47,7 +52,7 @@ export default class DynamicPageListReport extends Controller {
     ) as SmartVariantManagement;
     this.oExpandedLabel = this.getView()?.byId("expandedLabel") as Label;
     this.oSnappedLabel = this.getView()?.byId("snappedLabel") as Label;
-    this.oFilterBar = this.getView()?.byId("filterBar") as FilterBar;
+    this.oFilterBar = this.getView()?.byId("filterBar") as ExtendedFilterBar;
     this.oTable = this.getView()?.byId("table") as Table;
 
     this.oFilterBar?.registerFetchData(this.fetchData.bind(this));
@@ -216,32 +221,33 @@ export default class DynamicPageListReport extends Controller {
     );
   }
 
-  // public getFormattedSummaryTextExpanded(): string {
-  //   const aFiltersWithValues = this.oFilterBar?.retrieveFiltersWithValues();
+  public getFormattedSummaryTextExpanded(): string {
+    const aFiltersWithValues = this.oFilterBar?.retrieveFiltersWithValues();
 
-  //   if (aFiltersWithValues?.length === 0) {
-  //     return "No filters active";
-  //   }
+    if (aFiltersWithValues?.length === 0) {
+      return "No filters active";
+    }
 
-  //   const sText = aFiltersWithValues?.length + " filters active ",
-  //     aNonVisibleFiltersWithValues =
-  //       this.oFilterBar?.retrieveNonVisibleFiltersWithValues();
+    let sText = aFiltersWithValues?.length + " filters active ";
 
-  //   if (aFiltersWithValues?.length === 1) {
-  //     sText = aFiltersWithValues.length + " filter active";
-  //   }
+    const aNonVisibleFiltersWithValues: FilterGroupItem[] =
+      this.oFilterBar?.retrieveNonVisibleFiltersWithValues() ?? [];
 
-  //   if (
-  //     aNonVisibleFiltersWithValues &&
-  //     aNonVisibleFiltersWithValues.length > 0
-  //   ) {
-  //     sText += " (" + aNonVisibleFiltersWithValues.length + " hidden)";
-  //   }
-  //   return sText;
-  // }
+    if (aFiltersWithValues?.length === 1) {
+      sText = aFiltersWithValues.length + " filter active";
+    }
+
+    if (
+      aNonVisibleFiltersWithValues &&
+      aNonVisibleFiltersWithValues.length > 0
+    ) {
+      sText += " (" + aNonVisibleFiltersWithValues.length + " hidden)";
+    }
+    return sText;
+  }
 
   private _updateLabelsAndTable(): void {
-    // this.oExpandedLabel?.setText(this.getFormattedSummaryTextExpanded());
+    this.oExpandedLabel?.setText(this.getFormattedSummaryTextExpanded());
     this.oSnappedLabel?.setText(this.getFormattedSummaryText());
     this.oTable?.setShowOverlay(true);
   }
