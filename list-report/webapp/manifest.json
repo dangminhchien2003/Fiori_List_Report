@@ -1,0 +1,102 @@
+{
+  "_version": "1.76.0",
+  "sap.app": {
+    "id": "listreport",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.7",
+      "toolsId": "973aae1d-001a-4534-9f0b-e3373795ce15"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.140.0",
+      "libs": {
+        "sap.m": {},
+        "sap.f": {},
+        "sap.ui.comp": {},
+        "sap.ui.core": {},
+        "sap.ui.fl": {},
+				"sap.ui.mdc": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "listreport.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "listreport.view",
+        "async": true,
+        "viewPath": "listreport.view"
+      },
+      "routes": [
+        {
+          "name": "RouteDynamicPageListReport",
+          "pattern": ":?query:",
+          "target": [
+            "TargetDynamicPageListReport"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetDynamicPageListReport": {
+          "id": "DynamicPageListReport",
+          "name": "DynamicPageListReport"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "listreport.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@sapui5/ts-types": "^1.140.0"
+  }
+}
